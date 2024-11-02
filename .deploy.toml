@@ -1,0 +1,27 @@
+[dev.upload-run]
+url = "http://192.168.3.9:10405/deploy/file/upload-run/"
+p = "123456"
+b = ".build.txt"
+file = "target/baidu-ip-server-1.0.0.zip"
+d = "unzip/baidu-ip-server"
+c1 = "mkdir -p /data/apps/baidu-ip-server && mkdir -p backup/baidu-ip-server"
+c2 = "[ -d /data/apps/baidu-ip-server ] && cp -r /data/apps/baidu-ip-server backup/baidu-ip-server/$(date +%Y%m%d_%H%M%S)"
+c3 = "cp -r unzip/baidu-ip-server/* /data/apps/baidu-ip-server/"
+c4 = "if [ $(docker ps -qa -f name=baidu-ip-server) ]; then docker stop baidu-ip-server && docker rm -f baidu-ip-server; fi"
+c5 = "cd /data/apps/baidu-ip-server/baidu-ip-server-1.0.0 && docker run -dit --name baidu-ip-server --restart=always --net=host -v $(pwd):/app -w /app -e TZ=Asia/Shanghai -e LANG=C.UTF-8 litongjava/jdk:8u391-stable-slim java -Xverify:none -cp ./config:./lib/*:./static com.litongjava.ip.baidu.BaiduAppServer"
+c = "docker ps |grep baidu-ip-server"
+
+
+
+[prod.upload-run]
+url = "http://103.155.214.132:10405/deploy/file/upload-run/"
+p = "ekePalauM1"
+b = ".build.txt"
+file = "target/baidu-ip-server-1.0.0.zip"
+d = "unzip/baidu-ip-server"
+c1 = "mkdir -p /data/apps/baidu-ip-server && mkdir -p backup/baidu-ip-server"
+c2 = "[ -d /data/apps/baidu-ip-server ] && cp -r /data/apps/baidu-ip-server backup/baidu-ip-server/$(date +%Y%m%d_%H%M%S)"
+c3 = "cp -r unzip/baidu-ip-server/* /data/apps/baidu-ip-server/"
+c4 = "if [ $(docker ps -qa -f name=baidu-ip-server) ]; then docker stop baidu-ip-server && docker rm -f baidu-ip-server; fi"
+c5 = "cd /data/apps/baidu-ip-server/baidu-ip-server-1.0.0 && docker run -dit --name baidu-ip-server --restart=always --net=host -v $(pwd):/app -w /app -e TZ=Asia/Shanghai -e LANG=C.UTF-8 litongjava/jdk:8u391-stable-slim java -Xverify:none -cp ./config:./lib/*:./static com.litongjava.ip.baidu.BaiduAppServer --app.env=prod"
+c = "docker ps |grep baidu-ip-server"
